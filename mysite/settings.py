@@ -12,9 +12,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 import os
-
-from dj_database_url import parse as db_url
-from dj_database_url import config
+from dj_database_url import config, parse as db_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -88,12 +86,10 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 
 DATABASES = {
     'default': config(
-        'DATABASE_URL',
-        default=f"sqlite:///{os.path.join(BASE_DIR, 'db.sqlite3')}",
-        cast=db_url
+        'DATABASE_URL',  # Fetch the database URL from the environment variable
+        default=f"sqlite:///{os.path.join(BASE_DIR, 'db.sqlite3')}"  # Fallback to SQLite for local development
     )
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
